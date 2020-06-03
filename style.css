@@ -1,0 +1,135 @@
+r {color:red}
+m {color:magenta}
+g {color:green}
+
+div{ border: 0px solid yellow; }
+
+#file_list td { font-size:11px;
+                border1: 0px solid #def;
+                padding: 1px 5px;
+                }
+
+.filter button.btn 
+{ margin: 2px 1px;
+  height: 40px;   
+}
+
+.rowspan-2 {
+  height:100px;
+}
+
+.rowspan-2 button
+{
+  display: block;
+  margin:auto;
+}
+
+button span
+{
+    font-size:10px;
+}
+
+.rowspan-2 {
+  display: flex;
+}
+.rowspan-2 button{
+  align-self: center
+}
+
+
+.center-block {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pop
+{
+    position: absolute;
+}
+
+.popover{
+    position:  absolute;
+    top: 10px;
+    max-width: 100% !important;  /* Max Width of the popover (depending on the container!) */
+    width: 830px; /* Max Width of the popover (depending on the container!) */
+    border: 0px solid green;
+    
+}
+
+.img_container {
+   width: 800px;
+   height: 100%;
+   border: 1px solid red;
+}
+
+.img_container img {
+   width: 100%;
+}
+
+.col-md-half {
+   @extend .col-md-1;
+   width: percentage((0.5 / $grid-columns));
+}
+
+.col-xs-05, .col-xs-115 {
+    float: left;
+    min-height: 1px;
+    padding: 5px 5px;
+    position: relative;
+}
+
+.col-xs-05 {
+    width: 2.83%;
+}
+
+.active
+{
+    background-color: whitesmoke;
+}
+
+.col-xs-115 {
+    width: 95.33%;
+}
+
+.table td, .table th
+{
+    border: 0px solid green;
+}
+
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  padding: 10px;
+  margin: 5px;
+}
+
+.chart
+{
+    position:relative;
+    top1:100px;
+    margin: 3px;
+    right:10px;
+    width: 500px;
+    background-color: white;
+}
+
+#display_item
+{
+    background-color: whitesmoke;
+}
+
+
+tr.flist th
+{
+    vertical-align: middle ;
+    padding: 10px 10px !important;
+    border: 1px solid red ;
+}
+ 
+

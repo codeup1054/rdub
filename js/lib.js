@@ -3,11 +3,11 @@ var ShowImage;
 
 $( document ).ready(function() {
     
-    console.log( "ready!" );
+  console.log( "ready!" );
     
-    load_filter();
+  load_filter();
 
-    previewFile = function () {
+  previewFile = function () {
       var preview = document.querySelector('img');
       var file    = document.querySelector('input[type=file]').files[0];
       var reader  = new FileReader();
@@ -27,7 +27,7 @@ $( document ).ready(function() {
 
    
     
-    ShowImage = function (filepath){
+  ShowImage = function (filepath){
         var reader=new FileReader(); // File API object
     
         filepath = 'O:/mm2/photo/animation/0405 tropo/Picture 8085.jpg';
@@ -41,28 +41,18 @@ $( document ).ready(function() {
 
 //    ShowImage(filepath);
     
-    $("img").on("click1",function(e){
-        
-        console.log("@@ click1",$(this).attr('src'),"/n",e);
-        $(this).closest("div").toggleClass("pop"); 
-        
+  $("img").on("click1",function(e){
+        $(this).closest("div").toggleClass("pop"); //        console.log("@@ click1",$(this).attr('src'),"/n",e); 
     });
     
-    
-    
-    $("[data-toggle=popover]").popover();
+  $("[data-toggle=popover]").popover();
+  $( function() { $( ".test" ).draggable(); } );
 
-    
 
   $(".grp th").each(function(e)
   {
-
-//    console.log("@@ year",$(this).text(), year);
-    
     $(this).html("<a cls href='?year="+$(this).text()+"' >"+$(this).text()+"</a>");
-    
     if ($(this).text() == year) $(this).addClass('active');
-    
   });
     
  
@@ -83,19 +73,11 @@ $( document ).ready(function() {
  
  
  
- $('#cart-popover').popover({
-  html : true,
-        container: 'body',
-        content:function(){
-         return $('#popover_content_wrapper').html();
-        }
-});
- 
- 
 
 $(document).on('click', '.filter div button', function(){ $(this).toggleClass('btn-primary') });  
 $(document).on('click', '.test', function() {  load_filter(); })
 $(document).on('click', '.getfiles', function() {   get_files(); })
+$(document).on('click', '.scandir', function() {   scandir(); })
 $(document).on('click', 'img', function() { showPopup(); })
 $(document).on('click', '#file_list table table tr', function() { 
         toggleFileSelect($(this));
@@ -105,6 +87,15 @@ $(document).on('click', '.add_to_cart', function(e){
         e.stopPropagation(); 
         updateChart();
         });  
+
+$('#cart-popover').popover({
+        html : true,
+        container: 'body',
+        content:function(){
+        return $('#popover_content_wrapper').html();
+        }
+});
+
 
 /*
 .btn
@@ -116,6 +107,32 @@ $(document).on('click', '.add_to_cart', function(e){
 .btn-danger
 .btn-link
 */
+
+//2020-06-2020
+
+
+
+function scandir()
+{
+  if (1)
+    {  
+      $.ajax({
+       url:"a.php",
+       method:"POST",
+       data: {"a":"scan_dir" },
+       success:function(data)
+       {
+        $('.test').removeClass('hide');
+//        $('.test textarea').text(data);
+        js_data = $.parseJSON(data);
+        console.log ("@@ scandir", js_data) ;  
+        return data;
+       }
+      });
+    }   
+}
+
+
 // 2020-06-03
 
 function updateChart()
@@ -165,7 +182,6 @@ function load_filter()
       });
   }    
 }
-
 
 
 

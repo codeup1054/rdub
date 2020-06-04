@@ -32,15 +32,21 @@ jq_header();
     <div class="col-md-8 filter"></div>   
     <div class="col-md-3">
         <button class="btn btn-lg btn-success center-block getfiles">Найти</button>
-        <button class="btn btn-lg btn-danger center-block test">test</button>
+        <button class="btn btn-lg btn-danger center-block scandir">Сканировать</button>
     <!-- Корзина для переноса файлов -->
-        <button class="btn btn-lg btn-info center-block movefiles">Переместить</button>
+        <button class="btn btn-lg btn-info center-block movefiles">Переместить</button><br />
         Всего файлов <span class="total">0</span>
         <span id="display_item"></span>
     </div>        
 </div>
 <div class="row1"><span id='file_list'></span></div>
-
+<div class='test hide'>
+    <button class="btn btn-sn btn-danger center-block cleartestoutput"
+            onclick="$('.test').addClass('hide');"
+        >Очистить</button>
+        <br />
+    <textarea ></textarea>
+</div>
 <?php
 
 tm('>>>')

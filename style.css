@@ -2,6 +2,27 @@ r {color:red}
 m {color:magenta}
 g {color:green}
 
+
+.test 
+{
+border: 1px #888 solid;
+position:fixed;
+padding:5px;
+background: #fed;
+width1:60%;
+height1:80%;
+margin:2%; 
+}
+
+.test textarea
+{
+    width: 800px;
+    height:600px;
+}
+
+.hide
+{display:none;}
+
 div{ border: 0px solid yellow; }
 
 #file_list td { font-size:11px;

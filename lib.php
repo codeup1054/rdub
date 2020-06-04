@@ -101,23 +101,31 @@ catch(PDOException $ex){
             $path = realpath($fname);
             
             if (!is_dir($path)) {
-//                print $fname."****<br />";
-                if (exif_imagetype($fname))  {
+//                print $fname."\n";
+                
+                $info = (object) [];
+                
+                if ( @exif_imagetype($fname) )  {
+//                    print "\n".$fname."\n".exif_imagetype($fname);
                     $exif = exif_read_data($fname, 0, true);
                     $exif_to_db = array(
                     "fsize"=>$exif["FILE"]["FileSize"],
-                    "DateTimeOriginal"=>$exif["EXIF"]["DateTimeOriginal"]
+                    "DateTimeOriginal"=> (isset($exif["EXIF"]["DateTimeOriginal"]))? $exif["EXIF"]["DateTimeOriginal"] : "no data" 
                     );
-                    
-                     }
+                    }
                 else 
                     {
                     $exif_to_db = "exif type not supported";
-                    }    
-                $results[] = [$path,$exif_to_db];
+                    }
+                $info->f_path = dirname($path);
+                $info->f_basename = basename($path);
+                $info->f_size= filesize($path);
+                $info->ctime_h=date ("Y-m-d H:i", filectime ($path));
+                                
+                $results[] = $info;
             } else if ($value != "." && $value != "..") {
                 $this->getDirContents($path, $results);
-                $results[] = [$path,$exif];
+                $results[] = ["f_path"=>dirname($path),"type"=>"dir"];
             }
         }
     
@@ -213,6 +221,47 @@ index, ctime_h, exif_Camera, exif_DateTimeOriginal, exif_h, exif_w, f_basename, 
             }
         }
     
+    public function scannedToDB($data=[])
+    {
+//        var_dump($data);
+        
+        $vals = [];
+        $cnt = 0;
+        
+        foreach ($data as $k=>$v)
+        {
+            $cnt = $cnt +1;
+//            if ($cnt > 10 ) break;   
+//          print_r ($v);
+//          print (" --- ".$v->f_size."\n" );
+          if (isset($v->f_size)) 
+               $vals[] = "('$v->ctime_h','$v->f_basename','$v->f_path','$v->f_size')";
+//          print_r ($vals);
+        }
+
+        $sql = "TRUNCATE dupfiles;
+                INSERT into dupfiles (
+                    ctime_h,
+                    f_basename,
+                    f_path,
+                    f_size ) values ".join(",", $vals).";";
+//        print $sql;
+        
+        $sql = "TRUNCATE dupfiles;";
+        
+        $res = $this->q($sql);
+
+        $sql = "INSERT into dupfiles (
+                    ctime_h,
+                    f_basename,
+                    f_path,
+                    f_size ) values ".join(",", $vals).";";
+
+        
+        $res = $this->q($sql);
+//        var_dump($res);
+    }
+
     
     public function  getFilterFromStat()
     {
@@ -283,9 +332,7 @@ index, ctime_h, exif_Camera, exif_DateTimeOriginal, exif_h, exif_w, f_basename, 
     public function q($sql) // 2020-02-21
         {
          $res = [];
-        
 //         print "sql".$sql; 
-            
          try    
             {
                 $sth = $this->db->prepare($sql);
@@ -437,7 +484,7 @@ index, ctime_h, exif_Camera, exif_DateTimeOriginal, exif_h, exif_w, f_basename, 
                 var_dump($e->getMessage());
             }
 
-        $sql_res = '***';    
+        $sql_res = '$sql_res ***';    
 
         $res_json = array('sql_res'=>$sql_res);
 
@@ -481,8 +528,6 @@ index, ctime_h, exif_Camera, exif_DateTimeOriginal, exif_h, exif_w, f_basename, 
         'flac' => 'audio',
         'WAV' => 'audio',
         ];
-        
-        
         
         
         
@@ -543,7 +588,7 @@ index, ctime_h, exif_Camera, exif_DateTimeOriginal, exif_h, exif_w, f_basename, 
         //    $img = "image/".str_replace('\\','/',$img);
         //    $img = addslashes($img);
         //    getImg ($fname)
-              $rows .= ((isset ($v[$lk]))? "<td>".join("",$v[$lk])."</td>":"<td>***</td>");
+              $rows .= ((isset ($v[$lk]))? "<td>".join("",$v[$lk])."</td>":"<td>-</td>");
             }              
             $rows .= "</tr>";
         }

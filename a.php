@@ -5,16 +5,17 @@ $a = (isset($_REQUEST['a']))?$_REQUEST['a']:'';
 
 //var_dump($_REQUEST);
 
-echo tm(" *** case:".$a)."<br />";
+//echo tm(" *** case:".$a)."<br />";
 
 switch($a)
 {
 
-case 'read_dir':
+case 'scan_dir':
     $start_dir = 'O:\mm2\photo\Canon\\';
-    $start_dir = 'O:\mm2\photo\Canon\2018\2018-10-09 Рим\\';
+    $start_dir = 'images/';
     $response = $gsql->getDirContents($start_dir);
-
+    $gsql->scannedToDB($response);
+    print (json_encode($response)); 
     break;
     
 case 'read_pcl': 
@@ -35,7 +36,7 @@ default:
     $response = "no operation";
 }
 
-echo tm('>>>')."<br />";
+//echo tm('>>>')."<br />";
 
 //var_dump ($response)
 
